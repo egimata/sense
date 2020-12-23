@@ -15,34 +15,18 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-            <a class="nav-link" href="/dashboard">
+            <a class="nav-link" href="/home">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a>
         </li>
 
-        <!-- Divider -->
+        {{-- <!-- Divider -->
         <hr class="sidebar-divider">
 
         <!-- Heading -->
         <div class="sidebar-heading">
             Blogs
         </div>
-
-        {{-- <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-list-alt"></i>
-                <span>Categories</span>
-            </a>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Blog Categories</h6>
-                    <a class="collapse-item" href="/categories">All Categories</a>
-                    <a class="collapse-item" href="/categories/create">Create a Category</a>
-                </div>
-            </div>
-        </li> --}}
 
         <!-- Nav Item - Utilities Collapse Menu -->
         <li class="nav-item">
@@ -61,7 +45,7 @@
                     <a class="collapse-item" href="/categories/create">Create a Category</a>
                 </div>
             </div>
-        </li>
+        </li> --}}
 
         <!-- Divider -->
         <hr class="sidebar-divider">
@@ -92,6 +76,23 @@
             </div>
         </li>
         <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsecourse"
+                aria-expanded="true" aria-controls="collapsecourse">
+                <i class="fa-fw fas fa-pepper-hot"></i>
+                <span>Menu Restaurant</span>
+            </a>
+            <div id="collapsecourse" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Main Menu:</h6>
+                    <a class="collapse-item" href="{{ route('resto-category.index') }}">Menu Categories</a>
+                    <a class="collapse-item" href="{{ route('resto-category.create') }}">Create Category</a>
+                    <a class="collapse-item" href="{{ route('resto-product.index') }}">Menu Products</a>
+                    <a class="collapse-item" href="{{ route('resto-product.create') }}">Create Product</a>
+                    <div class="collapse-divider"></div>
+                </div>
+            </div>
+        </li>
+        {{-- <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStaff"
                 aria-expanded="true" aria-controls="collapseStaff">
                 <i class="fas fa-fw fa-chalkboard-teacher"></i>
@@ -122,7 +123,7 @@
                     <div class="collapse-divider"></div>
                 </div>
             </div>
-        </li>
+        </li> --}}
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGallery"
                 aria-expanded="true" aria-controls="collapseGallery">

@@ -38,11 +38,15 @@
                         <p>No Sub Category</p>
                     @endif --}}
                     <td ><a href="{{ route('menu-category.index', $menu_product->menu_category_id) }}">{{ $menu_product->menu_category->title }}</a></td>
-                    <td><a class="btn btn-primary" href="/menu-bar/menu-product/{{ $menu_product->id }}/edit">Edit</a></td>
-                    <td>{!! Form::open(['action' => ['App\Http\Controllers\MenuBar\MenuProductsController@destroy', $menu_product->id], 'method' => 'POST']) !!}
-                        {{ Form::hidden('_method', 'DELETE') }}
-                        {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
-                    {!! Form::close() !!}</td>
+                    @if(!Auth::gues())
+                        @if(Auth::user()->id == $menu_product->user_id)
+                            <td><a class="btn btn-primary" href="/menu-bar/menu-product/{{ $menu_product->id }}/edit">Edit</a></td>
+                            <td>{!! Form::open(['action' => ['App\Http\Controllers\MenuBar\MenuProductsController@destroy', $menu_product->id], 'method' => 'POST']) !!}
+                                {{ Form::hidden('_method', 'DELETE') }}
+                                {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
+                            {!! Form::close() !!}</td>
+                        @endif
+                    @endif
                 </tr>
             @endforeach
 

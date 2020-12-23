@@ -53,4 +53,12 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\MenuProduct');
     }
+    public function resto_categories()
+    {
+        return $this->hasMany('App\Models\RestoCategory');
+    }
+    public function resto_products()
+    {
+        return $this->hasMany('App\Models\RestoProduct');
+    }
 }

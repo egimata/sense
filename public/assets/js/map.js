@@ -1,20 +1,18 @@
 function singleMap() {
     //   marker ------------------
     var markerIcon = {
-        url: 'images/marker.png',
+        url: 'assets/images/marker.png',
     }
-    //   Your locations ------------------ 
+    //   Your locations ------------------
     var locations = [
-        ['Restabook in Manhattan', 40.7143528, -74.0059731],
-        ['Restabook in Bronx', 40.7168183, -73.9973402],
-        ['Restabook in Queens', 40.73334016, -73.99330616],
+        ['Rruga Mustafa Matohiti', 41.322684, 19.823815],
     ];
-    //  map settings ------------------	
+    //  map settings ------------------
     var single_map = new google.maps.Map(document.getElementById('singleMap'), {
         zoom: 13,
-        center: new google.maps.LatLng(40.73334016, -73.99330616),
-        scrollwheel: false,
-        zoomControl: false,
+        center: new google.maps.LatLng(41.322684, 19.823815),
+        scrollwheel: true,
+        zoomControl: true,
         fullscreenControl: false,
         mapTypeControl: false,
         scaleControl: false,

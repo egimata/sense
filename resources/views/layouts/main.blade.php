@@ -1,4 +1,4 @@
-                
+
 <!DOCTYPE HTML>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -9,7 +9,7 @@
     <meta name="keywords" content=""/>
     <meta name="description" content=""/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <!--=============== css  ===============-->	
+    <!--=============== css  ===============-->
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/reset.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/plugins.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
@@ -17,6 +17,12 @@
     <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/color.css') }}">
     <!--=============== favicons ===============-->
     <link rel="shortcut icon" href="images/favicon.ico">
+    <style>
+        .invalid-feedback {
+            display: block;
+            color: #ffff;
+        }
+    </style>
 </head>
 <body>
     <!-- lodaer  -->
@@ -31,17 +37,17 @@
     <!-- loader end  -->
     <!-- main start  -->
     <div id="main">
-        <!-- wrapper  -->	
+        <!-- wrapper  -->
         <div id="wrapper">
             @include('partials.index.nav')
             @yield('content')
             <!-- footer -->
             <div class="height-emulator fl-wrap"></div>
             @include('partials.index.footer')
-            <!-- footer end-->                                
+            <!-- footer end-->
         </div>
         <!-- wrapper end -->
-        <!-- reservation-modal-wrap-->          
+        <!-- reservation-modal-wrap-->
         <div class="reservation-modal-wrap">
             <div class="reserv-overlay crm">
                 <div class="cd-reserv-overlay-layer" data-frame="25">
@@ -59,7 +65,7 @@
                     </div>
                     <div class="reservation-wrap">
                         <div id="reserv-message"></div>
-                        <form  class="custom-form" action="http://restabook.kwst.net/dark/php/reservation.php" name="reservationform" id="reservationform">
+                        <form  class="custom-form" name="reservationform" id="reservationform">
                             <fieldset>
                                 <div class="row">
                                     <div class="col-sm-6">
@@ -121,17 +127,20 @@
                 </div>
             </div>
         </div>
-        <!-- reservation-modal-wrap end-->   
+        <!-- reservation-modal-wrap end-->
         <!-- cursor-->
         <div class="element">
             <div class="element-item"></div>
         </div>
-        <!-- cursor end-->                                                    
+        <!-- cursor end-->
     </div>
     <!-- Main end -->
     <!--=============== scripts  ===============-->
+    <script  src="http://maps.google.com/maps/api/js?key=AIzaSyCe2q1gFSd75jKUnTDPq0nZWaMlEu6vL30"></script>
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins.js') }}"></script>
-    <script src="{{ asset('assets/js/scripts.js') }}"></script> 
+    <script src="{{ asset('assets/js/scripts.js') }}"></script>
+    <script src="{{ asset('assets/js/map.js') }}"></script>
+
 </body>
 </html>

@@ -81,12 +81,12 @@ class MenuSubCategoriesController extends Controller
      */
     public function edit($id)
     {
-        $menu_sub_category = MenuCategory::find($id);
+        $menu_sub_category = MenuSubCategory::find($id);
         // check for correct user id
         if(auth()->user()->id !== $menu_sub_category->user_id){
             return redirect('menu-bar/menu-subcategory')->with('error', 'Unauthorized Page');
         }
-        return view('posts.edit')->with('post', $post);
+        return view('menu-bar.menu-subcategory.edit')->with('menu_sub_category', $menu_sub_category)->with('menu_categories', MenuCategory::all());
     }
 
     /**
@@ -96,7 +96,7 @@ class MenuSubCategoriesController extends Controller
      * @param  \App\Models\MenuSubCategory  $menuSubCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MenuSubCategory $menuSubCategory)
+    public function update(Request $request, $id)
     {
         $this->validate($request, [
             'title' => 'required',

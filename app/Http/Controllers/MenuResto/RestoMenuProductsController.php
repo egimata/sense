@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\MenuBar;
+namespace App\Http\Controllers\MenuResto;
 
 use App\Http\Controllers\Controller;
-use App\Models\MenuProduct;
-use App\Models\MenuCategory;
-use App\Models\MenuSubCategory;
 use Illuminate\Http\Request;
+use App\Models\RestoProduct;
+use App\Models\RestoCategory;
 use Illuminate\Support\Facades\Storage;
 
-class MenuProductsController extends Controller
+class RestoMenuProductsController extends Controller
 {
-   /**
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -27,10 +26,9 @@ class MenuProductsController extends Controller
      */
     public function index()
     {
-        $menu_products = MenuProduct::orderby('created_at', 'desc')->paginate(6);
-        return view('menu-bar.menu-product.index')->with('menu_products', $menu_products)->with('menu_categories', MenuCategory::all());
+        $resto_products = RestoProduct::orderby('created_at', 'desc')->paginate(9);
+        return view('menu-resto.resto-product.index')->with('resto_products', $resto_products);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -39,9 +37,7 @@ class MenuProductsController extends Controller
      */
     public function create()
     {
-        return view('menu-bar.menu-product.create')
-        ->with('menu_categories', MenuCategory::all())
-        ->with('menu_sub_categories', MenuSubCategory::all());
+        return view('menu-resto.resto-product.create')->with('resto_categories', RestoCategory::all());
     }
 
     /**
@@ -55,8 +51,8 @@ class MenuProductsController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'short_description' => 'required',
-            'image' => 'image|required|max:1999',
             'price' => 'required',
+            'image' => 'image|required|max:1999',
         ]);
         // File Upload
         if ($request->hasFile('image')){
@@ -69,20 +65,19 @@ class MenuProductsController extends Controller
             // Store Filename | Not overwrite image with same name
             $filenameStore = $filename.'_'.time().'.'.$extension;
             // Upload Image
-            $path = $request->file('image')->storeAs('public/images/menu-products', $filenameStore);
+            $path = $request->file('image')->storeAs('public/images/resto-product', $filenameStore);
         }
         // Create
-        $menu_product = new MenuProduct;
-        $menu_product->title = $request->input('title');
-        $menu_product->short_description = $request->input('short_description');
-        $menu_product->price = $request->input('price');
-        $menu_product->user_id = auth()->user()->id;
-        $menu_product->menu_category_id = $request->menu_category;
-        $menu_product->menu_sub_category_id = $request->menu_sub_category;
-        $menu_product->image = $filenameStore;
-        $menu_product->save();
+        $resto_product = new RestoProduct;
+        $resto_product->title = $request->input('title');
+        $resto_product->short_description = $request->input('short_description');
+        $resto_product->price = $request->input('price');
+        $resto_product->user_id = auth()->user()->id;
+        $resto_product->resto_category_id = $request->resto_category;
+        $resto_product->image = $filenameStore;
+        $resto_product->save();
 
-        return redirect('/menu-bar/menu-product/create')->with('success', 'Product Created Successfully');
+        return redirect('/menu-resto/resto-product/create')->with('success', 'Product Created Successfully');
     }
 
     /**
@@ -104,12 +99,12 @@ class MenuProductsController extends Controller
      */
     public function edit($id)
     {
-        $menu_product = MenuProduct::find($id);
+        $resto_product = RestoProduct::find($id);
         // check for correct user id
-        if(auth()->user()->id !== $menu_product->user_id){
-            return redirect('menu-bar/menu-product')->with('error', 'Unauthorized Page');
-        }
-        return view('menu-bar.menu-product.edit')->with('menu_product', $menu_product)->with('menu_sub_categories', MenuSubCategory::all())->with('menu_categories', MenuCategory::all());
+        // if(auth()->user()->id !== $resto_category->user_id){
+        //     return redirect('menu-resto/menu-category')->with('error', 'Unauthorized Page');
+        // }
+        return view('menu-resto.resto-product.edit')->with('resto_product', $resto_product);
     }
 
     /**
@@ -126,7 +121,6 @@ class MenuProductsController extends Controller
             'short_description' => 'required',
             'price' => 'required',
         ]);
-
         // File Upload
         if ($request->hasFile('image')){
             // Get Filename with extension
@@ -138,23 +132,22 @@ class MenuProductsController extends Controller
             // Store Filename | Not overwrite image with same name
             $filenameStore = $filename.'_'.time().'.'.$extension;
             // Upload Image
-            $path = $request->file('image')->storeAs('public/images/menu-products', $filenameStore);
+            $path = $request->file('image')->storeAs('public/images/resto-product', $filenameStore);
         }
         // Create
-        $menu_product = MenuProduct::find($id);
-        $menu_product->title = $request->input('title');
-        $menu_product->short_description = $request->input('short_description');
-        $menu_product->price = $request->input('price');
-        $menu_product->user_id = auth()->user()->id;
-        $menu_product->menu_category_id = $request->menu_category;
-        $menu_product->menu_sub_category_id = $request->menu_sub_category;
-        if ($request->hasFile('image')){
-            Storage::delete('public/images/menu-products'.$menu_product->image);
-            $menu_product->image = $filenameStore;
-        }
-        $menu_product->save();
 
-        return redirect('/menu-bar/menu-product')->with('success', 'Product Updated Successfully');
+        $resto_product = RestoProduct::find($id);
+        $resto_product->title = $request->input('title');
+        $resto_product->short_description = $request->input('short_description');
+        $resto_product->price = $request->input('price');
+        $resto_product->user_id = auth()->user()->id;
+        if ($request->hasFile('image')){
+            Storage::delete('public/images/resto-product'.$resto_product->image);
+            $resto_product->image = $filenameStore;
+        }
+        $resto_product->save();
+
+        return redirect('/menu-resto/resto-product')->with('success', 'Product Updated Successfully');
     }
 
     /**
@@ -165,13 +158,13 @@ class MenuProductsController extends Controller
      */
     public function destroy($id)
     {
-        $menu_product = MenuCategory::find($id);
-        if(auth()->user()->id !== $menu_product->user_id){
-            return redirect ('/menu-bar/menu-product')->with('error', 'Unauthorized Page');
-        }
+        $resto_product = RestoProduct::find($id);
+        // if(auth()->user()->id !== $menu_category->user_id){
+        //     return redirect ('/menu-bar/menu-category')->with('error', 'Unauthorized Page');
+        // }
         // Delete Image
-        Storage::delete('public/images/menu-products'.$menu_product->image);
-        $menu_product->delete();
-        return redirect('/menu-bar/menu-product')->with('success', 'Product Deleted');
+        Storage::delete('public/images/resto-product'.$resto_product->image);
+        $resto_product->delete();
+        return redirect('/menu-resto/resto-product')->with('success', 'Product Deleted');
     }
 }

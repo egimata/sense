@@ -18,6 +18,7 @@ class MenuCategory extends Model
     }
     public function menu_products()
     {
+        $menu_products = MenuProduct::orderby('created_at', 'asc')->paginate(6);
         return $this->hasMany('App\Models\MenuProduct');
     }
     public function menu_sub_categories()
